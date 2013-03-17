@@ -55,9 +55,9 @@ public class TSLKBoolean extends TSLKObject {
 	public boolean equals(TSLKObject obj) {
 		if (obj == null)
 			return false;
-		return obj.toString().equals(value ? "1" : "0")
-				|| (obj instanceof TSLKNumber && ((TSLKNumber) obj).getValue()
-						.equals(BigDecimal.ZERO) ^ this.value)
+		return (obj instanceof TSLKBoolean && ((TSLKBoolean) obj).getValue() == this.value)
+				|| (obj instanceof TSLKNumber && (((TSLKNumber) obj).getValue()
+						.compareTo(BigDecimal.ZERO) == 0) != this.value)
 				|| obj.toString().equals(this.toString());
 	}
 
