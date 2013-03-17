@@ -53,8 +53,12 @@ public class TSLKBoolean extends TSLKObject {
 
 	@Override
 	public boolean equals(TSLKObject obj) {
-		return obj.toString().equals(this.toString())
-				|| obj.toString().equals(value ? "1" : "0");
+		if (obj == null)
+			return false;
+		return obj.toString().equals(value ? "1" : "0")
+				|| (obj instanceof TSLKNumber && ((TSLKNumber) obj).getValue()
+						.equals(BigDecimal.ZERO) ^ this.value)
+				|| obj.toString().equals(this.toString());
 	}
 
 	@Override

@@ -11,14 +11,20 @@
 
 grammar TSLKGrammar;
 body:
-         (expr SEMI)*
+         (stmt SEMI)*
     ;
+stmt:
+    expr #NormalStmt
+    | RETURN e=expr #ReturnStmt
+    | BREAK #BreakStmt
+    | CONTINUE #ContinueStmt
+;
 expr:
      l=expr o=POW r=expr #BinaryOperator
     | o=(NOT | LEN | MINUS) e=expr #UnaryOperator
     | l=expr o=(MUL | DIV | REM) r=expr #BinaryOperator
     | l=expr o=(PLUS | MINUS) r=expr #BinaryOperator
-    | l=expr o=(LESSEQ| LESS | MOREEQ | MORE | NOTEQ | EQ) r=expr #BinaryOperator
+    | l=expr o=(LESSEQ| LESS | MOREEQ | MORE | NOTEQ | EQEQ) r=expr #BinaryOperator
     | l=expr o=OR r=expr #BinaryOperator
     | l=expr o=AND r=expr #BinaryOperator
     | FOR initexpr = expr SEMI whileexpr=expr SEMI increxpr=expr DO forbody=body END #ForBlock
@@ -26,9 +32,6 @@ expr:
     | IF ifexpr=expr THEN ifbody=body (ELSE IF elifexprs+=expr THEN elifbodies+=body)* (ELSE elsebody=body)? END #IfBlock
     | FUNC LPAREN (args+=GENERAL_ID (COMMA args+=GENERAL_ID)*?)? RPAREN funcbody=body END #FuncBlock
     | TABLE (vals+=tablenode (COMMA vals+=tablenode)*)? END #TableBlock
-    | RETURN e=expr #ReturnExpr
-    | BREAK #BreakExpr
-    | CONTINUE #ContinueExpr
     | LOCAL varid=GENERAL_ID o=EQ val=expr #LocalAssignExpr
     | varpath=path o=EQ val=expr #AssignExpr
     | varpath=path o=(PLUSEQ | MINUSEQ | MULEQ | DIVEQ | REM) val=expr #ModifyExpr
@@ -39,7 +42,7 @@ expr:
     | path #PathCall
     | LPAREN e=expr RPAREN #SubExpr;
 tablenode:
-    (key = (STRING|GENERAL_ID) COLON)? val=expr;
+   (key = (STRING|GENERAL_ID) COLON)? val=expr;
 path:
          l=path DOT name=GENERAL_ID #StaticChildCall
          | l=path LBRACKET r=expr RBRACKET #DynamicChildCall
@@ -77,6 +80,7 @@ LESSEQ: '<=';
 LESS: '<';
 MOREEQ: '>=';
 MORE: '>';
+EQEQ: '==';
 EQ: '=';
 NOTEQ: '!=';
 PLUS: '+';

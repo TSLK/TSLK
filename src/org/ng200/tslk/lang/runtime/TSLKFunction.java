@@ -159,9 +159,14 @@ public class TSLKFunction extends TSLKObject {
 						.peekFirst()
 						.put(getArguments()[i],
 								visitor.visitExpr(ctx.args.get(i)));
-			visitor.visitBody(getBody());
-		} catch (TSLKThrowableHacks.TSLKReturnThrowable t) {
-			returned = t.getReturnObject();
+			TSLKObject result = visitor.visitBody(getBody());
+			if (result != null) {
+				if (result.getClass() == TSLKReturnInterruptObject.class)
+					return ((TSLKInterruptObject) result).getPayload();
+				else if (result.getType() == Type.INTERRUPT)
+					throw new TSLKRuntimeException(
+							"Unexpected break or continue - return should be used to exit a function!");
+			}
 		} finally {
 			visitor.getVariables().removeFirst();
 			getTSLKInstance().getStepByStepManager().stepOut(ctx);

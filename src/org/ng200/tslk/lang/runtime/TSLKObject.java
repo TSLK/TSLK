@@ -12,7 +12,7 @@ package org.ng200.tslk.lang.runtime;
 
 public abstract class TSLKObject {
 	enum Type {
-		NUMBER, STRING, BOOLEAN, TABLE, UNKNOWN, FUNCTION
+		NUMBER, STRING, BOOLEAN, TABLE, UNKNOWN, FUNCTION, LIST, INTERRUPT
 	}
 
 	private TSLKInstance instance;

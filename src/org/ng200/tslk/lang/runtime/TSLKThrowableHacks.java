@@ -32,45 +32,4 @@ public class TSLKThrowableHacks {
 			return exception;
 		}
 	}
-
-	/*
-	 * These classes ugly hacks that make me cringe. Basically, when "return",
-	 * "continue" or "break" are called, one of the exceptions is thrown and the
-	 * function is responsible for catching it. Basically, abuse of Java's
-	 * exceptions...
-	 */
-	public static class TSLKReturnThrowable extends RuntimeException {
-		/**
-	 * 
-	 */
-		private static final long serialVersionUID = 8716311273520296718L;
-		private TSLKObject ret;
-
-		public TSLKReturnThrowable(TSLKObject ret) {
-			this.ret = ret;
-		}
-
-		public TSLKObject getReturnObject() {
-			return ret;
-		}
-	}
-
-	public static class TSLKBreakThrowable extends RuntimeException {
-
-		/**
-			 * 
-			 */
-		private static final long serialVersionUID = -486938514767778939L;
-
-	}
-
-	public static class TSLKContinueThrowable extends RuntimeException {
-
-		/**
-			 * 
-			 */
-		private static final long serialVersionUID = -5186309429177577500L;
-
-	}
-
 }

@@ -21,6 +21,7 @@ public class TSLKStepByStepManager {
 
 	private State state = State.NONE;
 	private HashSet<Integer> breakpoints = new HashSet<Integer>();
+	private boolean enabled = false;
 
 	public boolean canGoStepOver() {
 		return state == State.STEP;
@@ -63,6 +64,8 @@ public class TSLKStepByStepManager {
 	}
 
 	public void step(ParserRuleContext ctx) {
+		if (!enabled)
+			return;
 		for (int i = ctx.start.getLine(); i < ctx.stop.getLine(); i++)
 			if (breakpoints.contains(i))
 				state = State.STEP;
