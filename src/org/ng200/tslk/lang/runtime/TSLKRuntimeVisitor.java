@@ -202,6 +202,12 @@ public class TSLKRuntimeVisitor extends AbstractParseTreeVisitor<TSLKObject>
 			return visitContinueStmt((ContinueStmtContext) ctx);
 		if (ctx instanceof ReturnStmtContext)
 			return visitBreakStmt((BreakStmtContext) ctx);
+		if (ctx instanceof ForBlockContext)
+			return visitForBlock((ForBlockContext) ctx);
+		if (ctx instanceof WhileBlockContext)
+			return visitWhileBlock((WhileBlockContext) ctx);
+		if (ctx instanceof IfBlockContext)
+			return visitIfBlock((IfBlockContext) ctx);
 		throw new TSLKRuntimeException("Unknown statement!");
 	}
 
@@ -241,12 +247,6 @@ public class TSLKRuntimeVisitor extends AbstractParseTreeVisitor<TSLKObject>
 			return visitModifyExpr((ModifyExprContext) ctx);
 		if (ctx instanceof UnaryOperatorContext)
 			return visitUnaryOperator((UnaryOperatorContext) ctx);
-		if (ctx instanceof ForBlockContext)
-			return visitForBlock((ForBlockContext) ctx);
-		if (ctx instanceof WhileBlockContext)
-			return visitWhileBlock((WhileBlockContext) ctx);
-		if (ctx instanceof IfBlockContext)
-			return visitIfBlock((IfBlockContext) ctx);
 		if (ctx instanceof FuncBlockContext)
 			return visitFuncBlock((FuncBlockContext) ctx);
 		if (ctx instanceof PathCallContext)

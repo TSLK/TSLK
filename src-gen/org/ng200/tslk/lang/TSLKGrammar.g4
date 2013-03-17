@@ -18,6 +18,9 @@ stmt:
     | RETURN e=expr #ReturnStmt
     | BREAK #BreakStmt
     | CONTINUE #ContinueStmt
+    | FOR initexpr = expr SEMI whileexpr=expr SEMI increxpr=expr DO forbody=body END #ForBlock
+    | WHILE whileexpr=expr DO whilebody=body END #WhileBlock
+    | IF ifexpr=expr THEN ifbody=body (ELSE IF elifexprs+=expr THEN elifbodies+=body)* (ELSE elsebody=body)? END #IfBlock
 ;
 expr:
      l=expr o=POW r=expr #BinaryOperator
@@ -27,9 +30,6 @@ expr:
     | l=expr o=(LESSEQ| LESS | MOREEQ | MORE | NOTEQ | EQEQ) r=expr #BinaryOperator
     | l=expr o=OR r=expr #BinaryOperator
     | l=expr o=AND r=expr #BinaryOperator
-    | FOR initexpr = expr SEMI whileexpr=expr SEMI increxpr=expr DO forbody=body END #ForBlock
-    | WHILE whileexpr=expr DO whilebody=body END #WhileBlock
-    | IF ifexpr=expr THEN ifbody=body (ELSE IF elifexprs+=expr THEN elifbodies+=body)* (ELSE elsebody=body)? END #IfBlock
     | FUNC LPAREN (args+=GENERAL_ID (COMMA args+=GENERAL_ID)*?)? RPAREN funcbody=body END #FuncBlock
     | TABLE (vals+=tablenode (COMMA vals+=tablenode)*)? END #TableBlock
     | LOCAL varid=GENERAL_ID o=EQ val=expr #LocalAssignExpr

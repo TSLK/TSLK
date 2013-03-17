@@ -183,6 +183,33 @@ public class TSLKGrammarParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class WhileBlockContext extends StmtContext {
+		public ExprContext whileexpr;
+		public BodyContext whilebody;
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
+		}
+		public TerminalNode DO() { return getToken(TSLKGrammarParser.DO, 0); }
+		public TerminalNode WHILE() { return getToken(TSLKGrammarParser.WHILE, 0); }
+		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public WhileBlockContext(StmtContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterWhileBlock(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitWhileBlock(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitWhileBlock(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class NormalStmtContext extends StmtContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -202,18 +229,101 @@ public class TSLKGrammarParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class IfBlockContext extends StmtContext {
+		public ExprContext ifexpr;
+		public BodyContext ifbody;
+		public ExprContext expr;
+		public List<ExprContext> elifexprs = new ArrayList<ExprContext>();
+		public BodyContext body;
+		public List<BodyContext> elifbodies = new ArrayList<BodyContext>();
+		public BodyContext elsebody;
+		public List<BodyContext> body() {
+			return getRuleContexts(BodyContext.class);
+		}
+		public TerminalNode THEN(int i) {
+			return getToken(TSLKGrammarParser.THEN, i);
+		}
+		public TerminalNode ELSE(int i) {
+			return getToken(TSLKGrammarParser.ELSE, i);
+		}
+		public List<TerminalNode> THEN() { return getTokens(TSLKGrammarParser.THEN); }
+		public TerminalNode IF(int i) {
+			return getToken(TSLKGrammarParser.IF, i);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public List<TerminalNode> ELSE() { return getTokens(TSLKGrammarParser.ELSE); }
+		public BodyContext body(int i) {
+			return getRuleContext(BodyContext.class,i);
+		}
+		public List<TerminalNode> IF() { return getTokens(TSLKGrammarParser.IF); }
+		public IfBlockContext(StmtContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterIfBlock(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitIfBlock(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitIfBlock(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ForBlockContext extends StmtContext {
+		public ExprContext initexpr;
+		public ExprContext whileexpr;
+		public ExprContext increxpr;
+		public BodyContext forbody;
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
+		}
+		public TerminalNode DO() { return getToken(TSLKGrammarParser.DO, 0); }
+		public TerminalNode FOR() { return getToken(TSLKGrammarParser.FOR, 0); }
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public List<TerminalNode> SEMI() { return getTokens(TSLKGrammarParser.SEMI); }
+		public TerminalNode SEMI(int i) {
+			return getToken(TSLKGrammarParser.SEMI, i);
+		}
+		public ForBlockContext(StmtContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterForBlock(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitForBlock(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitForBlock(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final StmtContext stmt() throws RecognitionException {
 		StmtContext _localctx = new StmtContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_stmt);
+		int _la;
 		try {
-			setState(23);
+			int _alt;
+			setState(60);
 			switch (_input.LA(1)) {
 			case NUMBER:
 			case FUNC:
-			case FOR:
-			case WHILE:
-			case IF:
 			case LOCAL:
 			case TABLE:
 			case TRUE:
@@ -253,6 +363,73 @@ public class TSLKGrammarParser extends Parser {
 				setState(22); match(CONTINUE);
 				}
 				break;
+			case FOR:
+				_localctx = new ForBlockContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(23); match(FOR);
+				setState(24); ((ForBlockContext)_localctx).initexpr = expr(0);
+				setState(25); match(SEMI);
+				setState(26); ((ForBlockContext)_localctx).whileexpr = expr(0);
+				setState(27); match(SEMI);
+				setState(28); ((ForBlockContext)_localctx).increxpr = expr(0);
+				setState(29); match(DO);
+				setState(30); ((ForBlockContext)_localctx).forbody = body();
+				setState(31); match(END);
+				}
+				break;
+			case WHILE:
+				_localctx = new WhileBlockContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(33); match(WHILE);
+				setState(34); ((WhileBlockContext)_localctx).whileexpr = expr(0);
+				setState(35); match(DO);
+				setState(36); ((WhileBlockContext)_localctx).whilebody = body();
+				setState(37); match(END);
+				}
+				break;
+			case IF:
+				_localctx = new IfBlockContext(_localctx);
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(39); match(IF);
+				setState(40); ((IfBlockContext)_localctx).ifexpr = expr(0);
+				setState(41); match(THEN);
+				setState(42); ((IfBlockContext)_localctx).ifbody = body();
+				setState(51);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+				while ( _alt!=2 && _alt!=-1 ) {
+					if ( _alt==1 ) {
+						{
+						{
+						setState(43); match(ELSE);
+						setState(44); match(IF);
+						setState(45); ((IfBlockContext)_localctx).expr = expr(0);
+						((IfBlockContext)_localctx).elifexprs.add(((IfBlockContext)_localctx).expr);
+						setState(46); match(THEN);
+						setState(47); ((IfBlockContext)_localctx).body = body();
+						((IfBlockContext)_localctx).elifbodies.add(((IfBlockContext)_localctx).body);
+						}
+						} 
+					}
+					setState(53);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+				}
+				setState(56);
+				_la = _input.LA(1);
+				if (_la==ELSE) {
+					{
+					setState(54); match(ELSE);
+					setState(55); ((IfBlockContext)_localctx).elsebody = body();
+					}
+				}
+
+				setState(58); match(END);
+				}
+				break;
 			default:
 				throw new NoViableAltException(this);
 			}
@@ -283,28 +460,6 @@ public class TSLKGrammarParser extends Parser {
 			this._p = ctx._p;
 		}
 	}
-	public static class SubExprContext extends ExprContext {
-		public ExprContext e;
-		public TerminalNode RPAREN() { return getToken(TSLKGrammarParser.RPAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode LPAREN() { return getToken(TSLKGrammarParser.LPAREN, 0); }
-		public SubExprContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterSubExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitSubExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitSubExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class TableBlockContext extends ExprContext {
 		public TablenodeContext tablenode;
 		public List<TablenodeContext> vals = new ArrayList<TablenodeContext>();
@@ -332,6 +487,28 @@ public class TSLKGrammarParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitTableBlock(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class SubExprContext extends ExprContext {
+		public ExprContext e;
+		public TerminalNode RPAREN() { return getToken(TSLKGrammarParser.RPAREN, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode LPAREN() { return getToken(TSLKGrammarParser.LPAREN, 0); }
+		public SubExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterSubExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitSubExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitSubExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -418,54 +595,6 @@ public class TSLKGrammarParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class IfBlockContext extends ExprContext {
-		public ExprContext ifexpr;
-		public BodyContext ifbody;
-		public ExprContext expr;
-		public List<ExprContext> elifexprs = new ArrayList<ExprContext>();
-		public BodyContext body;
-		public List<BodyContext> elifbodies = new ArrayList<BodyContext>();
-		public BodyContext elsebody;
-		public List<BodyContext> body() {
-			return getRuleContexts(BodyContext.class);
-		}
-		public TerminalNode THEN(int i) {
-			return getToken(TSLKGrammarParser.THEN, i);
-		}
-		public TerminalNode ELSE(int i) {
-			return getToken(TSLKGrammarParser.ELSE, i);
-		}
-		public List<TerminalNode> THEN() { return getTokens(TSLKGrammarParser.THEN); }
-		public TerminalNode IF(int i) {
-			return getToken(TSLKGrammarParser.IF, i);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public List<TerminalNode> ELSE() { return getTokens(TSLKGrammarParser.ELSE); }
-		public BodyContext body(int i) {
-			return getRuleContext(BodyContext.class,i);
-		}
-		public List<TerminalNode> IF() { return getTokens(TSLKGrammarParser.IF); }
-		public IfBlockContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterIfBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitIfBlock(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitIfBlock(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class FuncBlockContext extends ExprContext {
 		public Token GENERAL_ID;
 		public List<Token> args = new ArrayList<Token>();
@@ -517,32 +646,6 @@ public class TSLKGrammarParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class BinaryOperatorContext extends ExprContext {
-		public ExprContext l;
-		public Token o;
-		public ExprContext r;
-		public TerminalNode AND() { return getToken(TSLKGrammarParser.AND, 0); }
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public BinaryOperatorContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterBinaryOperator(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitBinaryOperator(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitBinaryOperator(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class AssignExprContext extends ExprContext {
 		public PathContext varpath;
 		public Token o;
@@ -569,30 +672,29 @@ public class TSLKGrammarParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class WhileBlockContext extends ExprContext {
-		public ExprContext whileexpr;
-		public BodyContext whilebody;
-		public BodyContext body() {
-			return getRuleContext(BodyContext.class,0);
+	public static class BinaryOperatorContext extends ExprContext {
+		public ExprContext l;
+		public Token o;
+		public ExprContext r;
+		public TerminalNode AND() { return getToken(TSLKGrammarParser.AND, 0); }
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
-		public TerminalNode DO() { return getToken(TSLKGrammarParser.DO, 0); }
-		public TerminalNode WHILE() { return getToken(TSLKGrammarParser.WHILE, 0); }
-		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
-		public WhileBlockContext(ExprContext ctx) { copyFrom(ctx); }
+		public BinaryOperatorContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterWhileBlock(this);
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterBinaryOperator(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitWhileBlock(this);
+			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitBinaryOperator(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitWhileBlock(this);
+			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitBinaryOperator(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -617,42 +719,6 @@ public class TSLKGrammarParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitUnaryOperator(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ForBlockContext extends ExprContext {
-		public ExprContext initexpr;
-		public ExprContext whileexpr;
-		public ExprContext increxpr;
-		public BodyContext forbody;
-		public BodyContext body() {
-			return getRuleContext(BodyContext.class,0);
-		}
-		public TerminalNode DO() { return getToken(TSLKGrammarParser.DO, 0); }
-		public TerminalNode FOR() { return getToken(TSLKGrammarParser.FOR, 0); }
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode END() { return getToken(TSLKGrammarParser.END, 0); }
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public List<TerminalNode> SEMI() { return getTokens(TSLKGrammarParser.SEMI); }
-		public TerminalNode SEMI(int i) {
-			return getToken(TSLKGrammarParser.SEMI, i);
-		}
-		public ForBlockContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).enterForBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TSLKGrammarListener ) ((TSLKGrammarListener)listener).exitForBlock(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TSLKGrammarVisitor ) return ((TSLKGrammarVisitor<? extends T>)visitor).visitForBlock(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -719,14 +785,14 @@ public class TSLKGrammarParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(26);
+				setState(63);
 				((UnaryOperatorContext)_localctx).o = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MINUS) | (1L << NOT) | (1L << LEN))) != 0)) ) {
 					((UnaryOperatorContext)_localctx).o = (Token)_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(27); ((UnaryOperatorContext)_localctx).e = expr(20);
+				setState(64); ((UnaryOperatorContext)_localctx).e = expr(17);
 				}
 				break;
 
@@ -735,10 +801,10 @@ public class TSLKGrammarParser extends Parser {
 				_localctx = new LocalAssignExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(28); match(LOCAL);
-				setState(29); ((LocalAssignExprContext)_localctx).varid = match(GENERAL_ID);
-				setState(30); ((LocalAssignExprContext)_localctx).o = match(EQ);
-				setState(31); ((LocalAssignExprContext)_localctx).val = expr(9);
+				setState(65); match(LOCAL);
+				setState(66); ((LocalAssignExprContext)_localctx).varid = match(GENERAL_ID);
+				setState(67); ((LocalAssignExprContext)_localctx).o = match(EQ);
+				setState(68); ((LocalAssignExprContext)_localctx).val = expr(9);
 				}
 				break;
 
@@ -747,9 +813,9 @@ public class TSLKGrammarParser extends Parser {
 				_localctx = new AssignExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(32); ((AssignExprContext)_localctx).varpath = path(0);
-				setState(33); ((AssignExprContext)_localctx).o = match(EQ);
-				setState(34); ((AssignExprContext)_localctx).val = expr(8);
+				setState(69); ((AssignExprContext)_localctx).varpath = path(0);
+				setState(70); ((AssignExprContext)_localctx).o = match(EQ);
+				setState(71); ((AssignExprContext)_localctx).val = expr(8);
 				}
 				break;
 
@@ -758,92 +824,19 @@ public class TSLKGrammarParser extends Parser {
 				_localctx = new ModifyExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(36); ((ModifyExprContext)_localctx).varpath = path(0);
-				setState(37);
+				setState(73); ((ModifyExprContext)_localctx).varpath = path(0);
+				setState(74);
 				((ModifyExprContext)_localctx).o = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PLUSEQ) | (1L << MINUSEQ) | (1L << MULEQ) | (1L << DIVEQ) | (1L << REM))) != 0)) ) {
 					((ModifyExprContext)_localctx).o = (Token)_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(38); ((ModifyExprContext)_localctx).val = expr(7);
+				setState(75); ((ModifyExprContext)_localctx).val = expr(7);
 				}
 				break;
 
 			case 5:
-				{
-				_localctx = new ForBlockContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(40); match(FOR);
-				setState(41); ((ForBlockContext)_localctx).initexpr = expr(0);
-				setState(42); match(SEMI);
-				setState(43); ((ForBlockContext)_localctx).whileexpr = expr(0);
-				setState(44); match(SEMI);
-				setState(45); ((ForBlockContext)_localctx).increxpr = expr(0);
-				setState(46); match(DO);
-				setState(47); ((ForBlockContext)_localctx).forbody = body();
-				setState(48); match(END);
-				}
-				break;
-
-			case 6:
-				{
-				_localctx = new WhileBlockContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(50); match(WHILE);
-				setState(51); ((WhileBlockContext)_localctx).whileexpr = expr(0);
-				setState(52); match(DO);
-				setState(53); ((WhileBlockContext)_localctx).whilebody = body();
-				setState(54); match(END);
-				}
-				break;
-
-			case 7:
-				{
-				_localctx = new IfBlockContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(56); match(IF);
-				setState(57); ((IfBlockContext)_localctx).ifexpr = expr(0);
-				setState(58); match(THEN);
-				setState(59); ((IfBlockContext)_localctx).ifbody = body();
-				setState(68);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				while ( _alt!=2 && _alt!=-1 ) {
-					if ( _alt==1 ) {
-						{
-						{
-						setState(60); match(ELSE);
-						setState(61); match(IF);
-						setState(62); ((IfBlockContext)_localctx).expr = expr(0);
-						((IfBlockContext)_localctx).elifexprs.add(((IfBlockContext)_localctx).expr);
-						setState(63); match(THEN);
-						setState(64); ((IfBlockContext)_localctx).body = body();
-						((IfBlockContext)_localctx).elifbodies.add(((IfBlockContext)_localctx).body);
-						}
-						} 
-					}
-					setState(70);
-					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				}
-				setState(73);
-				_la = _input.LA(1);
-				if (_la==ELSE) {
-					{
-					setState(71); match(ELSE);
-					setState(72); ((IfBlockContext)_localctx).elsebody = body();
-					}
-				}
-
-				setState(75); match(END);
-				}
-				break;
-
-			case 8:
 				{
 				_localctx = new FuncBlockContext(_localctx);
 				_ctx = _localctx;
@@ -882,7 +875,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 9:
+			case 6:
 				{
 				_localctx = new TableBlockContext(_localctx);
 				_ctx = _localctx;
@@ -890,7 +883,7 @@ public class TSLKGrammarParser extends Parser {
 				setState(93); match(TABLE);
 				setState(102);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << FUNC) | (1L << FOR) | (1L << WHILE) | (1L << IF) | (1L << LOCAL) | (1L << TABLE) | (1L << TRUE) | (1L << FALSE) | (1L << MINUS) | (1L << NOT) | (1L << LEN) | (1L << LPAREN) | (1L << LBRACKET) | (1L << STRING) | (1L << GENERAL_ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << FUNC) | (1L << LOCAL) | (1L << TABLE) | (1L << TRUE) | (1L << FALSE) | (1L << MINUS) | (1L << NOT) | (1L << LEN) | (1L << LPAREN) | (1L << LBRACKET) | (1L << STRING) | (1L << GENERAL_ID))) != 0)) {
 					{
 					setState(94); ((TableBlockContext)_localctx).tablenode = tablenode();
 					((TableBlockContext)_localctx).vals.add(((TableBlockContext)_localctx).tablenode);
@@ -916,7 +909,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 10:
+			case 7:
 				{
 				_localctx = new AtomNumberContext(_localctx);
 				_ctx = _localctx;
@@ -925,7 +918,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 11:
+			case 8:
 				{
 				_localctx = new AtomStringContext(_localctx);
 				_ctx = _localctx;
@@ -934,7 +927,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 12:
+			case 9:
 				{
 				_localctx = new AtomBooleanTrueContext(_localctx);
 				_ctx = _localctx;
@@ -943,7 +936,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 13:
+			case 10:
 				{
 				_localctx = new AtomBooleanFalseContext(_localctx);
 				_ctx = _localctx;
@@ -952,7 +945,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 14:
+			case 11:
 				{
 				_localctx = new PathCallContext(_localctx);
 				_ctx = _localctx;
@@ -961,7 +954,7 @@ public class TSLKGrammarParser extends Parser {
 				}
 				break;
 
-			case 15:
+			case 12:
 				{
 				_localctx = new SubExprContext(_localctx);
 				_ctx = _localctx;
@@ -989,9 +982,9 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(116);
-						if (!(21 >= _localctx._p)) throw new FailedPredicateException(this, "21 >= $_p");
+						if (!(18 >= _localctx._p)) throw new FailedPredicateException(this, "18 >= $_p");
 						setState(117); ((BinaryOperatorContext)_localctx).o = match(POW);
-						setState(118); ((BinaryOperatorContext)_localctx).r = expr(22);
+						setState(118); ((BinaryOperatorContext)_localctx).r = expr(19);
 						}
 						break;
 
@@ -1001,7 +994,7 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(119);
-						if (!(19 >= _localctx._p)) throw new FailedPredicateException(this, "19 >= $_p");
+						if (!(16 >= _localctx._p)) throw new FailedPredicateException(this, "16 >= $_p");
 						setState(120);
 						((BinaryOperatorContext)_localctx).o = _input.LT(1);
 						_la = _input.LA(1);
@@ -1009,7 +1002,7 @@ public class TSLKGrammarParser extends Parser {
 							((BinaryOperatorContext)_localctx).o = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(121); ((BinaryOperatorContext)_localctx).r = expr(20);
+						setState(121); ((BinaryOperatorContext)_localctx).r = expr(17);
 						}
 						break;
 
@@ -1019,7 +1012,7 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(122);
-						if (!(18 >= _localctx._p)) throw new FailedPredicateException(this, "18 >= $_p");
+						if (!(15 >= _localctx._p)) throw new FailedPredicateException(this, "15 >= $_p");
 						setState(123);
 						((BinaryOperatorContext)_localctx).o = _input.LT(1);
 						_la = _input.LA(1);
@@ -1027,7 +1020,7 @@ public class TSLKGrammarParser extends Parser {
 							((BinaryOperatorContext)_localctx).o = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(124); ((BinaryOperatorContext)_localctx).r = expr(19);
+						setState(124); ((BinaryOperatorContext)_localctx).r = expr(16);
 						}
 						break;
 
@@ -1037,7 +1030,7 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(125);
-						if (!(17 >= _localctx._p)) throw new FailedPredicateException(this, "17 >= $_p");
+						if (!(14 >= _localctx._p)) throw new FailedPredicateException(this, "14 >= $_p");
 						setState(126);
 						((BinaryOperatorContext)_localctx).o = _input.LT(1);
 						_la = _input.LA(1);
@@ -1045,7 +1038,7 @@ public class TSLKGrammarParser extends Parser {
 							((BinaryOperatorContext)_localctx).o = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(127); ((BinaryOperatorContext)_localctx).r = expr(18);
+						setState(127); ((BinaryOperatorContext)_localctx).r = expr(15);
 						}
 						break;
 
@@ -1055,9 +1048,9 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(128);
-						if (!(16 >= _localctx._p)) throw new FailedPredicateException(this, "16 >= $_p");
+						if (!(13 >= _localctx._p)) throw new FailedPredicateException(this, "13 >= $_p");
 						setState(129); ((BinaryOperatorContext)_localctx).o = match(OR);
-						setState(130); ((BinaryOperatorContext)_localctx).r = expr(17);
+						setState(130); ((BinaryOperatorContext)_localctx).r = expr(14);
 						}
 						break;
 
@@ -1067,9 +1060,9 @@ public class TSLKGrammarParser extends Parser {
 						((BinaryOperatorContext)_localctx).l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(131);
-						if (!(15 >= _localctx._p)) throw new FailedPredicateException(this, "15 >= $_p");
+						if (!(12 >= _localctx._p)) throw new FailedPredicateException(this, "12 >= $_p");
 						setState(132); ((BinaryOperatorContext)_localctx).o = match(AND);
-						setState(133); ((BinaryOperatorContext)_localctx).r = expr(16);
+						setState(133); ((BinaryOperatorContext)_localctx).r = expr(13);
 						}
 						break;
 					}
@@ -1338,7 +1331,7 @@ public class TSLKGrammarParser extends Parser {
 						setState(162); match(LPAREN);
 						setState(171);
 						_la = _input.LA(1);
-						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << FUNC) | (1L << FOR) | (1L << WHILE) | (1L << IF) | (1L << LOCAL) | (1L << TABLE) | (1L << TRUE) | (1L << FALSE) | (1L << MINUS) | (1L << NOT) | (1L << LEN) | (1L << LPAREN) | (1L << LBRACKET) | (1L << STRING) | (1L << GENERAL_ID))) != 0)) {
+						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER) | (1L << FUNC) | (1L << LOCAL) | (1L << TABLE) | (1L << TRUE) | (1L << FALSE) | (1L << MINUS) | (1L << NOT) | (1L << LEN) | (1L << LPAREN) | (1L << LBRACKET) | (1L << STRING) | (1L << GENERAL_ID))) != 0)) {
 							{
 							setState(163); ((FuncCallContext)_localctx).expr = expr(0);
 							((FuncCallContext)_localctx).args.add(((FuncCallContext)_localctx).expr);
@@ -1406,65 +1399,65 @@ public class TSLKGrammarParser extends Parser {
 	}
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return 21 >= _localctx._p;
+		case 0: return 18 >= _localctx._p;
 
-		case 1: return 19 >= _localctx._p;
+		case 1: return 16 >= _localctx._p;
 
-		case 2: return 18 >= _localctx._p;
+		case 2: return 15 >= _localctx._p;
 
-		case 3: return 17 >= _localctx._p;
+		case 3: return 14 >= _localctx._p;
 
-		case 4: return 16 >= _localctx._p;
+		case 4: return 13 >= _localctx._p;
 
-		case 5: return 15 >= _localctx._p;
+		case 5: return 12 >= _localctx._p;
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
 		"\2\38\u00b6\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\2\7\2\20"+
-		"\n\2\f\2\16\2\23\13\2\3\3\3\3\3\3\3\3\3\3\5\3\32\n\3\3\4\3\4\3\4\3\4\3"+
+		"\n\2\f\2\16\2\23\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\7\3\64\n\3\f\3\16\3\67\13\3\3\3\3\3\5\3;\n\3\3\3\3\3\5\3?\n\3\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\7\4E\n\4\f\4\16\4H\13\4\3\4\3\4\5\4L\n\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\7\4U\n\4\f\4\16\4X\13\4\5\4Z\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\7\4d\n\4\f\4\16\4g\13\4\5\4i\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\5\4u\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\7\4\u0089\n\4\f\4\16\4\u008c\13\4\3\5\3\5\5\5\u0090"+
+		"\3\4\3\4\7\4U\n\4\f\4\16\4X\13\4\5\4Z\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\7\4d\n\4\f\4\16\4g\13\4\5\4i\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\5\4u\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\7\4\u0089\n\4\f\4\16\4\u008c\13\4\3\5\3\5\5\5\u0090"+
 		"\n\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6\u009a\n\6\3\6\3\6\3\6\3\6\3\6"+
 		"\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6\u00a9\n\6\f\6\16\6\u00ac\13\6\5\6"+
 		"\u00ae\n\6\3\6\7\6\u00b1\n\6\f\6\16\6\u00b4\13\6\3\6\4V\u00aa\7\2\4\6"+
 		"\b\n\2\b\4##\'(\4\25\30&&\3$&\3\"#\4\33\37!!\4\64\6488\u00d5\2\21\3\2"+
-		"\2\2\4\31\3\2\2\2\6t\3\2\2\2\b\u008f\3\2\2\2\n\u0099\3\2\2\2\f\r\5\4\3"+
-		"\2\r\16\7,\2\2\16\20\3\2\2\2\17\f\3\2\2\2\20\23\3\2\2\2\21\17\3\2\2\2"+
-		"\21\22\3\2\2\2\22\3\3\2\2\2\23\21\3\2\2\2\24\32\5\6\4\2\25\26\7\20\2\2"+
-		"\26\32\5\6\4\2\27\32\7\21\2\2\30\32\7\22\2\2\31\24\3\2\2\2\31\25\3\2\2"+
-		"\2\31\27\3\2\2\2\31\30\3\2\2\2\32\5\3\2\2\2\33\34\b\4\1\2\34\35\t\2\2"+
-		"\2\35u\5\6\4\2\36\37\7\16\2\2\37 \78\2\2 !\7 \2\2!u\5\6\4\2\"#\5\n\6\2"+
-		"#$\7 \2\2$%\5\6\4\2%u\3\2\2\2&\'\5\n\6\2\'(\t\3\2\2()\5\6\4\2)u\3\2\2"+
-		"\2*+\7\5\2\2+,\5\6\4\2,-\7,\2\2-.\5\6\4\2./\7,\2\2/\60\5\6\4\2\60\61\7"+
-		"\n\2\2\61\62\5\2\2\2\62\63\7\13\2\2\63u\3\2\2\2\64\65\7\6\2\2\65\66\5"+
-		"\6\4\2\66\67\7\n\2\2\678\5\2\2\289\7\13\2\29u\3\2\2\2:;\7\7\2\2;<\5\6"+
-		"\4\2<=\7\t\2\2=F\5\2\2\2>?\7\b\2\2?@\7\7\2\2@A\5\6\4\2AB\7\t\2\2BC\5\2"+
-		"\2\2CE\3\2\2\2D>\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2\2GK\3\2\2\2HF\3\2"+
-		"\2\2IJ\7\b\2\2JL\5\2\2\2KI\3\2\2\2KL\3\2\2\2LM\3\2\2\2MN\7\13\2\2Nu\3"+
-		"\2\2\2OP\7\4\2\2PY\7.\2\2QV\78\2\2RS\7+\2\2SU\78\2\2TR\3\2\2\2UX\3\2\2"+
-		"\2VW\3\2\2\2VT\3\2\2\2WZ\3\2\2\2XV\3\2\2\2YQ\3\2\2\2YZ\3\2\2\2Z[\3\2\2"+
-		"\2[\\\7/\2\2\\]\5\2\2\2]^\7\13\2\2^u\3\2\2\2_h\7\17\2\2`e\5\b\5\2ab\7"+
-		"+\2\2bd\5\b\5\2ca\3\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2fi\3\2\2\2ge\3"+
-		"\2\2\2h`\3\2\2\2hi\3\2\2\2ij\3\2\2\2ju\7\13\2\2ku\7\3\2\2lu\7\64\2\2m"+
-		"u\7\23\2\2nu\7\24\2\2ou\5\n\6\2pq\7.\2\2qr\5\6\4\2rs\7/\2\2su\3\2\2\2"+
-		"t\33\3\2\2\2t\36\3\2\2\2t\"\3\2\2\2t&\3\2\2\2t*\3\2\2\2t\64\3\2\2\2t:"+
-		"\3\2\2\2tO\3\2\2\2t_\3\2\2\2tk\3\2\2\2tl\3\2\2\2tm\3\2\2\2tn\3\2\2\2t"+
-		"o\3\2\2\2tp\3\2\2\2u\u008a\3\2\2\2vw\6\4\2\3wx\7)\2\2x\u0089\5\6\4\2y"+
-		"z\6\4\3\3z{\t\4\2\2{\u0089\5\6\4\2|}\6\4\4\3}~\t\5\2\2~\u0089\5\6\4\2"+
-		"\177\u0080\6\4\5\3\u0080\u0081\t\6\2\2\u0081\u0089\5\6\4\2\u0082\u0083"+
-		"\6\4\6\3\u0083\u0084\7\f\2\2\u0084\u0089\5\6\4\2\u0085\u0086\6\4\7\3\u0086"+
-		"\u0087\7\r\2\2\u0087\u0089\5\6\4\2\u0088v\3\2\2\2\u0088y\3\2\2\2\u0088"+
-		"|\3\2\2\2\u0088\177\3\2\2\2\u0088\u0082\3\2\2\2\u0088\u0085\3\2\2\2\u0089"+
-		"\u008c\3\2\2\2\u008a\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\7\3\2\2\2"+
-		"\u008c\u008a\3\2\2\2\u008d\u008e\t\7\2\2\u008e\u0090\7-\2\2\u008f\u008d"+
-		"\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0092\5\6\4\2\u0092"+
+		"\2\2\4>\3\2\2\2\6t\3\2\2\2\b\u008f\3\2\2\2\n\u0099\3\2\2\2\f\r\5\4\3\2"+
+		"\r\16\7,\2\2\16\20\3\2\2\2\17\f\3\2\2\2\20\23\3\2\2\2\21\17\3\2\2\2\21"+
+		"\22\3\2\2\2\22\3\3\2\2\2\23\21\3\2\2\2\24?\5\6\4\2\25\26\7\20\2\2\26?"+
+		"\5\6\4\2\27?\7\21\2\2\30?\7\22\2\2\31\32\7\5\2\2\32\33\5\6\4\2\33\34\7"+
+		",\2\2\34\35\5\6\4\2\35\36\7,\2\2\36\37\5\6\4\2\37 \7\n\2\2 !\5\2\2\2!"+
+		"\"\7\13\2\2\"?\3\2\2\2#$\7\6\2\2$%\5\6\4\2%&\7\n\2\2&\'\5\2\2\2\'(\7\13"+
+		"\2\2(?\3\2\2\2)*\7\7\2\2*+\5\6\4\2+,\7\t\2\2,\65\5\2\2\2-.\7\b\2\2./\7"+
+		"\7\2\2/\60\5\6\4\2\60\61\7\t\2\2\61\62\5\2\2\2\62\64\3\2\2\2\63-\3\2\2"+
+		"\2\64\67\3\2\2\2\65\63\3\2\2\2\65\66\3\2\2\2\66:\3\2\2\2\67\65\3\2\2\2"+
+		"89\7\b\2\29;\5\2\2\2:8\3\2\2\2:;\3\2\2\2;<\3\2\2\2<=\7\13\2\2=?\3\2\2"+
+		"\2>\24\3\2\2\2>\25\3\2\2\2>\27\3\2\2\2>\30\3\2\2\2>\31\3\2\2\2>#\3\2\2"+
+		"\2>)\3\2\2\2?\5\3\2\2\2@A\b\4\1\2AB\t\2\2\2Bu\5\6\4\2CD\7\16\2\2DE\78"+
+		"\2\2EF\7 \2\2Fu\5\6\4\2GH\5\n\6\2HI\7 \2\2IJ\5\6\4\2Ju\3\2\2\2KL\5\n\6"+
+		"\2LM\t\3\2\2MN\5\6\4\2Nu\3\2\2\2OP\7\4\2\2PY\7.\2\2QV\78\2\2RS\7+\2\2"+
+		"SU\78\2\2TR\3\2\2\2UX\3\2\2\2VW\3\2\2\2VT\3\2\2\2WZ\3\2\2\2XV\3\2\2\2"+
+		"YQ\3\2\2\2YZ\3\2\2\2Z[\3\2\2\2[\\\7/\2\2\\]\5\2\2\2]^\7\13\2\2^u\3\2\2"+
+		"\2_h\7\17\2\2`e\5\b\5\2ab\7+\2\2bd\5\b\5\2ca\3\2\2\2dg\3\2\2\2ec\3\2\2"+
+		"\2ef\3\2\2\2fi\3\2\2\2ge\3\2\2\2h`\3\2\2\2hi\3\2\2\2ij\3\2\2\2ju\7\13"+
+		"\2\2ku\7\3\2\2lu\7\64\2\2mu\7\23\2\2nu\7\24\2\2ou\5\n\6\2pq\7.\2\2qr\5"+
+		"\6\4\2rs\7/\2\2su\3\2\2\2t@\3\2\2\2tC\3\2\2\2tG\3\2\2\2tK\3\2\2\2tO\3"+
+		"\2\2\2t_\3\2\2\2tk\3\2\2\2tl\3\2\2\2tm\3\2\2\2tn\3\2\2\2to\3\2\2\2tp\3"+
+		"\2\2\2u\u008a\3\2\2\2vw\6\4\2\3wx\7)\2\2x\u0089\5\6\4\2yz\6\4\3\3z{\t"+
+		"\4\2\2{\u0089\5\6\4\2|}\6\4\4\3}~\t\5\2\2~\u0089\5\6\4\2\177\u0080\6\4"+
+		"\5\3\u0080\u0081\t\6\2\2\u0081\u0089\5\6\4\2\u0082\u0083\6\4\6\3\u0083"+
+		"\u0084\7\f\2\2\u0084\u0089\5\6\4\2\u0085\u0086\6\4\7\3\u0086\u0087\7\r"+
+		"\2\2\u0087\u0089\5\6\4\2\u0088v\3\2\2\2\u0088y\3\2\2\2\u0088|\3\2\2\2"+
+		"\u0088\177\3\2\2\2\u0088\u0082\3\2\2\2\u0088\u0085\3\2\2\2\u0089\u008c"+
+		"\3\2\2\2\u008a\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\7\3\2\2\2\u008c"+
+		"\u008a\3\2\2\2\u008d\u008e\t\7\2\2\u008e\u0090\7-\2\2\u008f\u008d\3\2"+
+		"\2\2\u008f\u0090\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0092\5\6\4\2\u0092"+
 		"\t\3\2\2\2\u0093\u0094\b\6\1\2\u0094\u009a\78\2\2\u0095\u0096\7\60\2\2"+
 		"\u0096\u0097\5\6\4\2\u0097\u0098\7\61\2\2\u0098\u009a\3\2\2\2\u0099\u0093"+
 		"\3\2\2\2\u0099\u0095\3\2\2\2\u009a\u00b2\3\2\2\2\u009b\u009c\6\6\b\3\u009c"+
@@ -1476,7 +1469,7 @@ public class TSLKGrammarParser extends Parser {
 		"\u00a5\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00af\3\2\2\2\u00af\u00b1\7/"+
 		"\2\2\u00b0\u009b\3\2\2\2\u00b0\u009e\3\2\2\2\u00b0\u00a3\3\2\2\2\u00b1"+
 		"\u00b4\3\2\2\2\u00b2\u00b0\3\2\2\2\u00b2\u00b3\3\2\2\2\u00b3\13\3\2\2"+
-		"\2\u00b4\u00b2\3\2\2\2\23\21\31FKVYeht\u0088\u008a\u008f\u0099\u00aa\u00ad"+
+		"\2\u00b4\u00b2\3\2\2\2\23\21\65:>VYeht\u0088\u008a\u008f\u0099\u00aa\u00ad"+
 		"\u00b0\u00b2";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
