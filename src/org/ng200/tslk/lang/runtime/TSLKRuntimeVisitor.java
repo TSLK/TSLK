@@ -127,56 +127,36 @@ public class TSLKRuntimeVisitor extends AbstractParseTreeVisitor<TSLKObject>
 	public TSLKObject visitBinaryOperator(BinaryOperatorContext ctx) {
 		TSLKObject l = visitExpr(ctx.l);
 		TSLKObject r = visitExpr(ctx.r);
-		// if()
+		if (l == null && r == null)
+			return null;
 		switch (ctx.o.getType()) {
 		case TSLKGrammarLexer.AND:
-			return l == null ? new TSLKBoolean(instance, false) : l.and(r);
+			return instance.getBinaryOperatorService().and(l, r);
 		case TSLKGrammarLexer.OR:
-			return l == null ? new TSLKBoolean(instance, new TSLKBoolean(
-					instance, true).equals(r)) : l.or(r);
+			return instance.getBinaryOperatorService().or(l, r);
 		case TSLKGrammarLexer.DIV:
-			if (l == null)
-				throw new TSLKRuntimeException(
-						"Can't perform arithmetic on null!");
-			return l.divide(r);
+			return instance.getBinaryOperatorService().divide(l, r);
 		case TSLKGrammarLexer.MUL:
-			if (l == null)
-				throw new TSLKRuntimeException(
-						"Can't perform arithmetic on null!");
-			return l.multiply(r);
+			return instance.getBinaryOperatorService().multiply(l, r);
 		case TSLKGrammarLexer.REM:
-			if (l == null)
-				throw new TSLKRuntimeException(
-						"Can't perform arithmetic on null!");
-			return l.remainder(r);
+			return instance.getBinaryOperatorService().remainder(l, r);
 		case TSLKGrammarLexer.PLUS:
-			if (l == null)
-				throw new TSLKRuntimeException(
-						"Can't perform arithmetic on null!");
-			return l.add(r);
+			return instance.getBinaryOperatorService().add(l, r);
 		case TSLKGrammarLexer.MINUS:
-			if (l == null)
-				throw new TSLKRuntimeException(
-						"Can't perform arithmetic on null!");
-			return l.subtract(r);
+			return instance.getBinaryOperatorService().subtract(l, r);
 		case TSLKGrammarLexer.LESS:
-			return l == null ? new TSLKBoolean(instance, r != null)
-					: new TSLKBoolean(instance, l.isLess(r));
+			return instance.getBinaryOperatorService().isLess(l, r);
 		case TSLKGrammarLexer.LESSEQ:
-			return l == null ? new TSLKBoolean(instance, true)
-					: new TSLKBoolean(instance, l.isLessOrEqual(r));
+			return instance.getBinaryOperatorService().isLessOrEqual(l, r);
 		case TSLKGrammarLexer.MORE:
-			return l == null ? new TSLKBoolean(instance, false)
-					: new TSLKBoolean(instance, l.isMore(r));
+			return instance.getBinaryOperatorService().isMore(l, r);
 		case TSLKGrammarLexer.MOREEQ:
-			return l == null ? new TSLKBoolean(instance, r == null)
-					: new TSLKBoolean(instance, l.isMoreOrEqual(r));
+			return instance.getBinaryOperatorService().isMoreOrEqual(l, r);
 		case TSLKGrammarLexer.EQEQ:
-			return l == null ? new TSLKBoolean(instance, r == null)
-					: new TSLKBoolean(instance, l.equals(r));
+			return instance.getBinaryOperatorService().isEqual(l, r);
 		case TSLKGrammarLexer.NOTEQ:
-			return l == null ? new TSLKBoolean(instance, r != null)
-					: new TSLKBoolean(instance, !l.equals(r));
+			return new TSLKBoolean(instance, !instance
+					.getBinaryOperatorService().isEqual(l, r).getValue());
 		}
 		throw new TSLKRuntimeException("Unknown binary operator!");
 	}

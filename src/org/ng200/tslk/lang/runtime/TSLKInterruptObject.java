@@ -14,30 +14,12 @@ public class TSLKInterruptObject extends TSLKObject {
 		return payload;
 	}
 
-	@Override
-	public TSLKObject add(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public TSLKObject and(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public TSLKObject divide(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public boolean equals(TSLKObject obj) {
 		throw new TSLKRuntimeException("This method should never be called!");
 	}
 
-	@Override
-	public TSLKObject exponentiate(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public TSLKObject getAtIndex(TSLKObject obj) {
@@ -49,25 +31,6 @@ public class TSLKInterruptObject extends TSLKObject {
 		throw new TSLKRuntimeException("This method should never be called!");
 	}
 
-	@Override
-	public boolean isLess(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public boolean isLessOrEqual(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public boolean isMore(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public boolean isMoreOrEqual(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public TSLKObject length() {
@@ -79,35 +42,18 @@ public class TSLKInterruptObject extends TSLKObject {
 		throw new TSLKRuntimeException("This method should never be called!");
 	}
 
-	@Override
-	public TSLKObject multiply(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public TSLKObject not() {
 		throw new TSLKRuntimeException("This method should never be called!");
 	}
 
-	@Override
-	public TSLKObject or(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
-
-	@Override
-	public TSLKObject remainder(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public void setAtIndex(TSLKObject index, TSLKObject value) {
 		throw new TSLKRuntimeException("This method should never be called!");
 	}
 
-	@Override
-	public TSLKObject subtract(TSLKObject obj) {
-		throw new TSLKRuntimeException("This method should never be called!");
-	}
 
 	@Override
 	public String toString() {

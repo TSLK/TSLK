@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.ng200.tslk.lang.runtime.exceptions.TSLKRuntimeException;
 import org.ng200.tslk.lang.runtime.exceptions.TSLKTypeMismatchException;
@@ -12,23 +13,35 @@ public class TSLKBooleanTest {
 	private TSLKInstance instance = new TSLKInstance();
 	private TSLKBoolean True = new TSLKBoolean(instance, true);
 	private TSLKBoolean False = new TSLKBoolean(instance, false);
+	private TSLKBinaryOperatorService binop;
 
-	@Test(expected = TSLKTypeMismatchException.class)
+	@Before
+	public void setUp() {
+		binop = instance.getBinaryOperatorService();
+	}
+
 	public void testAdd() {
-		True.add(False);
+		assertEquals(new TSLKNumber(instance, new BigDecimal(1)),
+				binop.add(False, False));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(1)),
+				binop.add(True, False));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(1)),
+				binop.add(False, True));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(2)),
+				binop.add(True, True));
 	}
 
 	@Test
 	public void testAnd() {
-		assertEquals(true, ((TSLKBoolean) True.and(True)).getValue());
-		assertEquals(false, ((TSLKBoolean) True.and(False)).getValue());
-		assertEquals(false, ((TSLKBoolean) False.and(False)).getValue());
-		assertEquals(false, ((TSLKBoolean) False.and(True)).getValue());
+		assertEquals(true, ((TSLKBoolean) binop.and(True, True)).getValue());
+		assertEquals(false, ((TSLKBoolean) binop.and(True, False)).getValue());
+		assertEquals(false, ((TSLKBoolean) binop.and(False, True)).getValue());
+		assertEquals(false, ((TSLKBoolean) binop.and(False, False)).getValue());
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testDivide() {
-		True.divide(False);
+		binop.divide(True, False);
 	}
 
 	@Test
@@ -46,7 +59,7 @@ public class TSLKBooleanTest {
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testExponentiate() {
-		True.exponentiate(False);
+		binop.exponentiate(True, False);
 	}
 
 	@Test(expected = TSLKRuntimeException.class)
@@ -56,22 +69,22 @@ public class TSLKBooleanTest {
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testIsLess() {
-		False.isLess(True);
+		binop.isLess(False, True);
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testIsLessOrEqual() {
-		False.isLessOrEqual(True);
+		binop.isLessOrEqual(False, True);
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testIsMore() {
-		True.isMore(False);
+		binop.isMore(False, True);
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testIsMoreOrEqual() {
-		True.isMoreOrEqual(False);
+		binop.isMoreOrEqual(False, True);
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
@@ -84,9 +97,9 @@ public class TSLKBooleanTest {
 		True.minus();
 	}
 
-	@Test(expected = TSLKTypeMismatchException.class)
 	public void testMultiply() {
-		True.multiply(False);
+		assertEquals(new TSLKNumber(instance, new BigDecimal(0)),
+				binop.multiply(True, False));
 	}
 
 	public void testNot() {
@@ -96,15 +109,15 @@ public class TSLKBooleanTest {
 
 	@Test
 	public void testOr() {
-		assertEquals(true, ((TSLKBoolean) True.or(True)).getValue());
-		assertEquals(true, ((TSLKBoolean) True.or(False)).getValue());
-		assertEquals(false, ((TSLKBoolean) False.or(False)).getValue());
-		assertEquals(true, ((TSLKBoolean) False.or(True)).getValue());
+		assertEquals(true, ((TSLKBoolean) binop.or(True, True)).getValue());
+		assertEquals(true, ((TSLKBoolean) binop.or(True, False)).getValue());
+		assertEquals(true, ((TSLKBoolean) binop.or(False, True)).getValue());
+		assertEquals(false, ((TSLKBoolean) binop.or(False, False)).getValue());
 	}
 
 	@Test(expected = TSLKTypeMismatchException.class)
 	public void testRemainder() {
-		True.remainder(False);
+		binop.remainder(False, True);
 	}
 
 	@Test(expected = TSLKRuntimeException.class)
@@ -112,9 +125,15 @@ public class TSLKBooleanTest {
 		True.getAtIndex(False);
 	}
 
-	@Test(expected = TSLKTypeMismatchException.class)
 	public void testSubtract() {
-		True.subtract(False);
+		assertEquals(new TSLKNumber(instance, new BigDecimal(0)),
+				binop.subtract(False, False));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(1)),
+				binop.subtract(True, False));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(-1)),
+				binop.subtract(False, True));
+		assertEquals(new TSLKNumber(instance, new BigDecimal(0)),
+				binop.subtract(True, True));
 	}
 
 	@Test

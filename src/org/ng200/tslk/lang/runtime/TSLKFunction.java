@@ -29,34 +29,10 @@ public class TSLKFunction extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject add(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
-	}
-
-	@Override
-	public TSLKObject and(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform bitwise operations on a function!");
-	}
-
-	@Override
-	public TSLKObject divide(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
-	}
-
-	@Override
 	public boolean equals(TSLKObject obj) {
 		if (!(obj instanceof TSLKFunction))
 			return false;
 		return body.equals(((TSLKFunction) obj).getBody());
-	}
-
-	@Override
-	public TSLKObject exponentiate(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
 	}
 
 	public String[] getArguments() {
@@ -78,28 +54,6 @@ public class TSLKFunction extends TSLKObject {
 	}
 
 	@Override
-	public boolean isLess(TSLKObject obj) {
-		throw new TSLKRuntimeException(
-				"Functions can only be compared to functions and for equality only!");
-	}
-
-	@Override
-	public boolean isLessOrEqual(TSLKObject obj) {
-		return equals(obj);
-	}
-
-	@Override
-	public boolean isMore(TSLKObject obj) {
-		throw new TSLKRuntimeException(
-				"Functions can only be compared to functions and for equality only!");
-	}
-
-	@Override
-	public boolean isMoreOrEqual(TSLKObject obj) {
-		return equals(obj);
-	}
-
-	@Override
 	public TSLKObject length() {
 		throw new TSLKTypeMismatchException("Functions have no length!");
 	}
@@ -110,38 +64,14 @@ public class TSLKFunction extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject multiply(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
-	}
-
-	@Override
 	public TSLKObject not() {
 		throw new TSLKTypeMismatchException(
 				"Can't perform bitwise operations on a function!");
 	}
 
 	@Override
-	public TSLKObject or(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform bitwise operations on a function!");
-	}
-
-	@Override
-	public TSLKObject remainder(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
-	}
-
-	@Override
 	public void setAtIndex(TSLKObject index, TSLKObject value) {
 		throw new TSLKRuntimeException("Can't index a function!");
-	}
-
-	@Override
-	public TSLKObject subtract(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a function!");
 	}
 
 	@Override

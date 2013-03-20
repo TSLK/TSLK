@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import javax.naming.OperationNotSupportedException;
-
 import org.ng200.tslk.lang.runtime.exceptions.TSLKRuntimeException;
 import org.ng200.tslk.lang.runtime.exceptions.TSLKTypeMismatchException;
 
@@ -45,46 +43,6 @@ public class TSLKNumber extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject add(TSLKObject obj) {
-		if (obj instanceof TSLKNumber)
-			return new TSLKNumber(getTSLKInstance(),
-					value.add(((TSLKNumber) obj).getValue()));
-		return new TSLKString(getTSLKInstance(), this.toString() + obj);
-	}
-
-	@Override
-	public TSLKObject and(TSLKObject obj) {
-		if (!isWhole(value))
-			throw new TSLKRuntimeException(
-					"Bitwise operations can only be done on whole numbers and booleans!");
-		if (obj instanceof TSLKBoolean)
-			return new TSLKBoolean(getTSLKInstance(), !getValue().equals(
-					BigDecimal.ZERO)
-					&& (((TSLKBoolean) obj).getValue()));
-		if ((obj instanceof TSLKNumber && !isWhole(((TSLKNumber) obj)
-				.getValue())) || !(obj instanceof TSLKNumber))
-			throw new TSLKTypeMismatchException(
-					"Bitwise operations can only be done on whole numbers and booleans!");
-		return new TSLKNumber(getTSLKInstance(), new BigDecimal(
-				value.longValue() & ((TSLKNumber) obj).getValue().longValue()));
-	}
-
-	@Override
-	public TSLKObject divide(TSLKObject obj) {
-		if (obj instanceof TSLKNumber) {
-			if (((TSLKNumber) obj).getValue().compareTo(BigDecimal.ZERO) == 0)
-				throw new TSLKRuntimeException("Can't divide by zero!");
-			return new TSLKNumber(getTSLKInstance(), value.divide(
-					((TSLKNumber) obj).getValue(), 16, RoundingMode.HALF_UP));
-		}
-		if (obj == null)
-			throw new TSLKTypeMismatchException(
-					"Can't divide a number by null.");
-		throw new TSLKTypeMismatchException("Can't divide a number by a "
-				+ obj.getType().name().toLowerCase() + ".");
-	}
-
-	@Override
 	public boolean equals(TSLKObject obj) {
 		if (obj == null)
 			return false;
@@ -92,12 +50,6 @@ public class TSLKNumber extends TSLKObject {
 			return value.compareTo(((TSLKNumber) obj).getValue()) == 0;
 		throw new TSLKTypeMismatchException("Can't compare a number with "
 				+ obj.getType().name().toLowerCase());
-	}
-
-	@Override
-	public TSLKObject exponentiate(TSLKObject obj) {
-		throw new RuntimeException(new OperationNotSupportedException(
-				"Putting a number to a power is not yet supported."));
 	}
 
 	@Override
@@ -115,46 +67,6 @@ public class TSLKNumber extends TSLKObject {
 	}
 
 	@Override
-	public boolean isLess(TSLKObject obj) {
-		if (obj == null)
-			return false;
-		if (obj instanceof TSLKNumber)
-			return value.compareTo(((TSLKNumber) obj).getValue()) < 0;
-		throw new TSLKTypeMismatchException("Can't compare a number with "
-				+ obj.getType().name().toLowerCase());
-	}
-
-	@Override
-	public boolean isLessOrEqual(TSLKObject obj) {
-		if (obj == null)
-			return false;
-		if (obj instanceof TSLKNumber)
-			return value.compareTo(((TSLKNumber) obj).getValue()) <= 0;
-		throw new TSLKTypeMismatchException("Can't compare a number with "
-				+ obj.getType().name().toLowerCase());
-	}
-
-	@Override
-	public boolean isMore(TSLKObject obj) {
-		if (obj == null)
-			return true;
-		if (obj instanceof TSLKNumber)
-			return value.compareTo(((TSLKNumber) obj).getValue()) > 0;
-		throw new TSLKTypeMismatchException("Can't compare a number with "
-				+ obj.getType().name().toLowerCase());
-	}
-
-	@Override
-	public boolean isMoreOrEqual(TSLKObject obj) {
-		if (obj == null)
-			return true;
-		if (obj instanceof TSLKNumber)
-			return value.compareTo(((TSLKNumber) obj).getValue()) >= 0;
-		throw new TSLKTypeMismatchException("Can't compare a number with "
-				+ obj.getType().name().toLowerCase());
-	}
-
-	@Override
 	public TSLKObject length() {
 		throw new TSLKRuntimeException("Numbers have no length!");
 	}
@@ -165,18 +77,6 @@ public class TSLKNumber extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject multiply(TSLKObject obj) {
-		if (obj instanceof TSLKNumber)
-			return new TSLKNumber(getTSLKInstance(),
-					value.multiply(((TSLKNumber) obj).getValue()));
-		if (obj == null)
-			throw new TSLKTypeMismatchException(
-					"Can't multiply a number by null.");
-		throw new TSLKTypeMismatchException("Can't multiply a number by a "
-				+ obj.getType().name().toLowerCase() + ".");
-	}
-
-	@Override
 	public TSLKObject not() {
 		throw new TSLKRuntimeException(
 				"The not operation can not be done on numbers in TSLK -"
@@ -184,54 +84,8 @@ public class TSLKNumber extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject or(TSLKObject obj) {
-		if (!isWhole(value))
-			throw new TSLKRuntimeException(
-					"Bitwise operations can only be done on whole numbers and booleans!");
-		if (obj instanceof TSLKBoolean)
-			return new TSLKBoolean(getTSLKInstance(), !getValue().equals(
-					BigDecimal.ZERO)
-					|| (((TSLKBoolean) obj).getValue()));
-		if ((obj instanceof TSLKNumber && !isWhole(((TSLKNumber) obj)
-				.getValue())) || !(obj instanceof TSLKNumber))
-			throw new TSLKTypeMismatchException(
-					"Bitwise operations can only be done on whole numbers and booleans!");
-		return new TSLKNumber(getTSLKInstance(), new BigDecimal(
-				value.longValue() | ((TSLKNumber) obj).getValue().longValue()));
-	}
-
-	@Override
-	public TSLKObject remainder(TSLKObject obj) {
-		if (obj instanceof TSLKNumber) {
-			if (((TSLKNumber) obj).getValue().compareTo(BigDecimal.ZERO) == 0)
-				throw new TSLKRuntimeException(
-						"Can't divide by zero - so there is no remainder either!");
-			return new TSLKNumber(getTSLKInstance(),
-					value.remainder(((TSLKNumber) obj).getValue()));
-		}
-		if (obj == null)
-			throw new TSLKTypeMismatchException(
-					"Can't divide a number by null - so there is no remainder either!");
-		throw new TSLKTypeMismatchException("Can't divide a number by a "
-				+ obj.getType().name().toLowerCase()
-				+ " - so there is no remainder either!");
-	}
-
-	@Override
 	public void setAtIndex(TSLKObject index, TSLKObject value) {
 		throw new TSLKRuntimeException("Can't index a number!");
-	}
-
-	@Override
-	public TSLKObject subtract(TSLKObject obj) {
-		if (obj instanceof TSLKNumber)
-			return new TSLKNumber(getTSLKInstance(),
-					value.subtract(((TSLKNumber) obj).getValue()));
-		if (obj == null)
-			throw new TSLKTypeMismatchException(
-					"Can't subtract null from a number.");
-		throw new TSLKTypeMismatchException("Can't subtract a "
-				+ obj.getType().name().toLowerCase() + " from a number.");
 	}
 
 	@Override

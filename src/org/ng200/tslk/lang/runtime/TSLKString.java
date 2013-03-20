@@ -24,31 +24,8 @@ public class TSLKString extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject add(TSLKObject obj) {
-		return new TSLKString(getTSLKInstance(), this.toString()
-				+ obj.toString());
-	}
-
-	@Override
-	public TSLKObject and(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform bitwise operations on a string!");
-	}
-
-	@Override
-	public TSLKObject divide(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform division on a string!");
-	}
-
-	@Override
 	public boolean equals(TSLKObject obj) {
 		return this.toString().compareTo(obj.toString()) == 0;
-	}
-
-	@Override
-	public TSLKObject exponentiate(TSLKObject obj) {
-		throw new TSLKTypeMismatchException("Can't exponentiate a string!");
 	}
 
 	@Override
@@ -69,26 +46,6 @@ public class TSLKString extends TSLKObject {
 	}
 
 	@Override
-	public boolean isLess(TSLKObject obj) {
-		return this.toString().compareTo(obj.toString()) < 0;
-	}
-
-	@Override
-	public boolean isLessOrEqual(TSLKObject obj) {
-		return this.toString().compareTo(obj.toString()) <= 0;
-	}
-
-	@Override
-	public boolean isMore(TSLKObject obj) {
-		return this.toString().compareTo(obj.toString()) > 0;
-	}
-
-	@Override
-	public boolean isMoreOrEqual(TSLKObject obj) {
-		return this.toString().compareTo(obj.toString()) >= 0;
-	}
-
-	@Override
 	public TSLKObject length() {
 		return new TSLKNumber(getTSLKInstance(), new BigDecimal(this.toString()
 				.length()));
@@ -101,38 +58,14 @@ public class TSLKString extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject multiply(TSLKObject obj) {
-		// TODO: implement a repeat function
-		return null;
-	}
-
-	@Override
 	public TSLKObject not() {
 		throw new TSLKTypeMismatchException(
 				"Can't perform bitwise operations on a string!");
 	}
 
 	@Override
-	public TSLKObject or(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform bitwise operations on a string!");
-	}
-
-	@Override
-	public TSLKObject remainder(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform a remainder calculation operation on a string!");
-	}
-
-	@Override
 	public void setAtIndex(TSLKObject index, TSLKObject value) {
 		throw new TSLKRuntimeException("You can't change a string directly!");
-	}
-
-	@Override
-	public TSLKObject subtract(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform subtraction on a string!");
 	}
 
 	@Override

@@ -12,7 +12,7 @@ package org.ng200.tslk.lang.runtime;
 
 public abstract class TSLKObject {
 	enum Type {
-		NUMBER, STRING, BOOLEAN, TABLE, UNKNOWN, FUNCTION, LIST, INTERRUPT
+		NUMBER, STRING, BOOLEAN, TABLE, UNKNOWN, FUNCTION, LIST, INTERRUPT, NULL
 	}
 
 	private TSLKInstance instance;
@@ -24,12 +24,6 @@ public abstract class TSLKObject {
 		this.type = type;
 	}
 
-	public abstract TSLKObject add(TSLKObject obj);
-
-	public abstract TSLKObject and(TSLKObject obj);
-
-	public abstract TSLKObject divide(TSLKObject obj);
-
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof TSLKObject))
@@ -38,8 +32,6 @@ public abstract class TSLKObject {
 	}
 
 	public abstract boolean equals(TSLKObject obj);
-
-	public abstract TSLKObject exponentiate(TSLKObject obj);
 
 	public abstract TSLKObject getAtIndex(TSLKObject obj);
 
@@ -54,29 +46,13 @@ public abstract class TSLKObject {
 	@Override
 	public abstract int hashCode();
 
-	public abstract boolean isLess(TSLKObject obj);
-
-	public abstract boolean isLessOrEqual(TSLKObject obj);
-
-	public abstract boolean isMore(TSLKObject obj);
-
-	public abstract boolean isMoreOrEqual(TSLKObject obj);
-
 	public abstract TSLKObject length();
 
 	public abstract TSLKObject minus();
 
-	public abstract TSLKObject multiply(TSLKObject obj);
-
 	public abstract TSLKObject not();
 
-	public abstract TSLKObject or(TSLKObject obj);
-
-	public abstract TSLKObject remainder(TSLKObject obj);
-
 	public abstract void setAtIndex(TSLKObject index, TSLKObject value);
-
-	public abstract TSLKObject subtract(TSLKObject obj);
 
 	@Override
 	public abstract String toString();

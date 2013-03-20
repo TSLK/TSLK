@@ -25,33 +25,6 @@ public class TSLKBoolean extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject add(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
-	}
-
-	@Override
-	public TSLKObject and(TSLKObject obj) {
-		if (obj instanceof TSLKBoolean)
-			return new TSLKBoolean(getTSLKInstance(), value
-					&& ((TSLKBoolean) obj).getValue());
-		if (obj instanceof TSLKNumber)
-			return new TSLKBoolean(getTSLKInstance(), value
-					&& !((TSLKNumber) obj).getValue().equals(BigDecimal.ZERO));
-		throw new TSLKTypeMismatchException(
-				"Can't perform binary operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
-	}
-
-	@Override
-	public TSLKObject divide(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
-	}
-
-	@Override
 	public boolean equals(TSLKObject obj) {
 		if (obj == null)
 			return false;
@@ -59,13 +32,6 @@ public class TSLKBoolean extends TSLKObject {
 				|| (obj instanceof TSLKNumber && (((TSLKNumber) obj).getValue()
 						.compareTo(BigDecimal.ZERO) == 0) != this.value)
 				|| obj.toString().equals(this.toString());
-	}
-
-	@Override
-	public TSLKObject exponentiate(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
 	}
 
 	@Override
@@ -83,30 +49,6 @@ public class TSLKBoolean extends TSLKObject {
 	}
 
 	@Override
-	public boolean isLess(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't do arithmetic comparison with a boolean!");
-	}
-
-	@Override
-	public boolean isLessOrEqual(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't do arithmetic comparison with a boolean!");
-	}
-
-	@Override
-	public boolean isMore(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't do arithmetic comparison with a boolean!");
-	}
-
-	@Override
-	public boolean isMoreOrEqual(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't do arithmetic comparison with a boolean!");
-	}
-
-	@Override
 	public TSLKObject length() {
 		throw new TSLKTypeMismatchException("Booleans don't have length!");
 	}
@@ -117,48 +59,14 @@ public class TSLKBoolean extends TSLKObject {
 	}
 
 	@Override
-	public TSLKObject multiply(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
-	}
-
-	@Override
 	public TSLKObject not() {
 		return new TSLKBoolean(getTSLKInstance(), !value);
-	}
-
-	@Override
-	public TSLKObject or(TSLKObject obj) {
-		if (obj instanceof TSLKBoolean)
-			return new TSLKBoolean(getTSLKInstance(), value
-					|| ((TSLKBoolean) obj).getValue());
-		if (obj instanceof TSLKNumber)
-			return new TSLKBoolean(getTSLKInstance(), value
-					|| !((TSLKNumber) obj).getValue().equals(BigDecimal.ZERO));
-		throw new TSLKTypeMismatchException(
-				"Can't perform binary operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
-	}
-
-	@Override
-	public TSLKObject remainder(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
 	}
 
 	@Override
 	public void setAtIndex(TSLKObject index, TSLKObject value) {
 		throw new TSLKRuntimeException("Can't index a boolean!");
 
-	}
-
-	@Override
-	public TSLKObject subtract(TSLKObject obj) {
-		throw new TSLKTypeMismatchException(
-				"Can't perform arithmetic operations on a boolean and a "
-						+ obj.getType().name().toLowerCase() + "!");
 	}
 
 	@Override

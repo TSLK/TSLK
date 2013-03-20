@@ -15,6 +15,8 @@ import java.util.LinkedList;
 public class TSLKInstance {
 	private LinkedList<String> callStack = new LinkedList<String>();
 	private TSLKStepByStepManager stepByStepManager = new TSLKStepByStepManager();
+	private TSLKBinaryOperatorService binaryOperatorService = new TSLKBinaryOperatorService(
+			this);
 
 	public void enterFunction(String callName) {
 		callStack.addFirst(callName);
@@ -26,5 +28,9 @@ public class TSLKInstance {
 
 	public TSLKStepByStepManager getStepByStepManager() {
 		return stepByStepManager;
+	}
+
+	public TSLKBinaryOperatorService getBinaryOperatorService() {
+		return binaryOperatorService;
 	}
 }
