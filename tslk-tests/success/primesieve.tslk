@@ -8,12 +8,16 @@
  * Contributors:
  *     Nick Guletskii - initial API and implementation
  ******************************************************************************/
-package org.ng200.tslk.lang.runtime;
 
-public class TSLKBreakInterruptObject extends TSLKInterruptObject {
-
-	public TSLKBreakInterruptObject(TSLKInstance instance) {
-		super(instance, null);
-	}
-
-}
+// Basic sieve of Eratosthenes implementation in TSLK. Currently slow.
+visited = table end;
+limit = 10000;
+for i = 2; i<limit; i=i+1 do
+	if visited[i] then
+		continue;
+	end;
+	reportResult(i);
+	for j=2; j*i<limit; j=j+1 do
+		visited[i*j] = true;
+	end;
+end;

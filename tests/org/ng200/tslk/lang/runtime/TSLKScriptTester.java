@@ -10,10 +10,12 @@
  ******************************************************************************/
 package org.ng200.tslk.lang.runtime;
 
-public class TSLKBreakInterruptObject extends TSLKInterruptObject {
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-	public TSLKBreakInterruptObject(TSLKInstance instance) {
-		super(instance, null);
-	}
+@RunWith(Suite.class)
+@SuiteClasses({ TSLKSuccessfulScriptTest.class })
+public class TSLKScriptTester {
 
 }

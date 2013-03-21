@@ -17,7 +17,7 @@ for i = 2; i<limit; i=i+1 do
 		continue;
 	end;
 	println(i);
-	for j=2; j*i<limit; j = j + 1 do
+	for j=2; j*i<limit; j=j+1 do
 		visited[i*j] = true;
 	end;
 end;
