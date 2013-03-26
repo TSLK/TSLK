@@ -8,7 +8,9 @@ Currently, the test suite is pretty much non-existent. Expanding it is of high p
 
 To build TSLK, you will also need TSLKParserGenerator.
 
-```git clone https://github.com/nickguletskii/TSLK.git
-git clone https://github.com/nickguletskii/TSLKParserGenerator.git```
+```
+git clone https://github.com/nickguletskii/TSLK.git
+git clone https://github.com/nickguletskii/TSLKParserGenerator.git
+```
 
 Thank you for having a look!
