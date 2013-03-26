@@ -13,9 +13,13 @@ package org.ng200.tslk;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.ng200.tslk.lang.runtime.TSLKBooleanTest;
+import org.ng200.tslk.lang.runtime.TSLKNumberTest;
+import org.ng200.tslk.lang.runtime.TSLKScriptTester;
 
 @RunWith(Suite.class)
-@SuiteClasses({})
+@SuiteClasses({ TSLKBooleanTest.class, TSLKNumberTest.class,
+		TSLKScriptTester.class })
 public class AllTests {
 
 }
